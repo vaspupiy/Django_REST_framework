@@ -1,8 +1,15 @@
+import random
+
 from django.core.management.base import BaseCommand
 from django.db.utils import IntegrityError
 
+from ToDoapp.models import Project, TODO
 from users.models import User
-from mimesis import Text, Person, Datetime
+from mimesis import Text, Person, Datetime, Internet
+
+COUNT_USERS = 0
+COUNT_PROJECTS = 0
+COUNT_TODO = 10
 
 
 class Command(BaseCommand):
@@ -13,7 +20,7 @@ class Command(BaseCommand):
         # CREATE USERS
         person = Person()
 
-        for _ in range(100):
+        for _ in range(COUNT_USERS):
             username_ = person.username(mask='C')
             password_ = person.password(length=8)
             print(f'Логин: {username_} / Пароль: {password_}')
@@ -40,3 +47,37 @@ class Command(BaseCommand):
             super_user = User.objects.create_superuser('django', 'django@geekshop.local', 'geekbrains')
         except Exception as err:
             print('Занято!', err)
+
+        # Создаем таблицу Project
+        print('Создаем таблицу Project')
+
+        text = Text('ru')
+        internet = Internet()
+
+        for _ in range(COUNT_PROJECTS):
+            name_ = text.word()
+            link_ = internet.url(subdomains=['todo'])
+            project = Project(
+                name=name_,
+                link=link_,
+            )
+            project.save()
+            count_worker = random.randint(1, 6)
+            workers = User.objects.order_by('?')[: count_worker]
+            project.worker.set(workers)
+            project.save()
+
+        # Создаем таблицу to_do
+        print('Создаем таблицу TODO')
+        for _ in range(COUNT_TODO):
+            author_ = User.objects.order_by('?').first()
+            project_ = Project.objects.order_by('?').first()
+            title_ = text.text(quantity=1)
+            text_ = text.text(quantity=5)
+            todo = TODO(
+                author=author_,
+                project=project_,
+                title=title_,
+                text=text_,
+            )
+            todo.save()
