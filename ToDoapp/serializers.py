@@ -12,8 +12,8 @@ class SimpleUserModelSerializer(HyperlinkedModelSerializer):
 
 
 class ProjectModelSerializer(HyperlinkedModelSerializer):
-    # worker = StringRelatedField(many=True,)
-    # worker = PrimaryKeyRelatedField(many=True, read_only=True)
+    worker = StringRelatedField(many=True,)
+    uid = StringRelatedField(read_only=True)
 
     class Meta:
         model = Project
@@ -22,8 +22,8 @@ class ProjectModelSerializer(HyperlinkedModelSerializer):
 
 
 class TODOModelSerializer(HyperlinkedModelSerializer):
-    # author = SimpleUserModelSerializer()
-    # project = ProjectModelSerializer()
+    author = StringRelatedField()
+    project = StringRelatedField()
 
     class Meta:
         model = TODO

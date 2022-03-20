@@ -1,6 +1,6 @@
 import React from "react";
 import Table from 'react-bootstrap/Table'
-import { Link } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 
 const ProjectItem = ({ project }) => {
@@ -8,7 +8,7 @@ const ProjectItem = ({ project }) => {
         <tbody>
             <tr>
                 <td>
-                    <Link to={`project/${project.uid}`}>{project.name}</Link>
+                    {project.name}
                 </td>
                 <td>
                     {project.link}
@@ -23,7 +23,9 @@ const ProjectItem = ({ project }) => {
 }
 
 
-const ProjectList = ({ projects }) => {
+const ProjectListItem = ({ projects }) => {
+    let { id } = useParams();
+    let filtered_items = projects.filter((item) => item.uid == id)
     return (
         <Table striped bordered hover variant="dark">
             <thead>
@@ -35,13 +37,13 @@ const ProjectList = ({ projects }) => {
                         Link
                     </th>
                     <th>
-                        Worker
+                        Workers
                     </th>
                 </tr>
             </thead>
-            {projects.map((project) => <ProjectItem project={project} />)}
+            {filtered_items.map((project) => <ProjectItem project={project} />)}
         </Table>
     )
 }
 
-export default ProjectList
+export default ProjectListItem
