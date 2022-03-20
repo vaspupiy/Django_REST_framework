@@ -5,6 +5,8 @@ import UserList from "./components/User";
 import axios from 'axios'
 import Footer from "./components/Footer";
 import Navb from "./components/Navb";
+import { HashRouter, Route, Switch } from 'react-router-dom';
+
 
 class App extends React.Component {
   constructor(props) {
@@ -28,11 +30,18 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="App">
         <Navb />
+        <HashRouter>
+          <Switch>
+            {/* <Route exact path='/' component={() => <UserList items={this.state.users} />} /> */}
+            <Route exact path='/home' component={() => <UserList users={this.state.users} />} />
+          </Switch>
+        </HashRouter>
         <UserList users={this.state.users} />
+
         <Footer />
-      </div>
+      </div >
 
     )
   }
