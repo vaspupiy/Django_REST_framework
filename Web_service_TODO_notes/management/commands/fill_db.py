@@ -7,8 +7,8 @@ from ToDoapp.models import Project, TODO
 from users.models import User
 from mimesis import Text, Person, Datetime, Internet
 
-COUNT_USERS = 0
-COUNT_PROJECTS = 0
+COUNT_USERS = 10
+COUNT_PROJECTS = 10
 COUNT_TODO = 10
 
 
