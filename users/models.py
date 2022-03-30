@@ -13,3 +13,8 @@ class User(AbstractUser):
     def __str__(self):
         return f'{self.username} - {self.first_name} {self.last_name}'
 
+    class Meta:
+        db_table = 'user'
+        verbose_name = 'User'
+
+
