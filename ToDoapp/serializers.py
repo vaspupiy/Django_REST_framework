@@ -1,6 +1,5 @@
 from rest_framework.serializers import ModelSerializer, StringRelatedField, \
-    PrimaryKeyRelatedField, \
-    HyperlinkedModelSerializer
+    PrimaryKeyRelatedField, HyperlinkedModelSerializer
 
 from users.models import User
 from .models import Project, TODO
@@ -45,8 +44,22 @@ class TestProjectSerializerBase(ModelSerializer):
 
 
 class TestProjectSerializer(ModelSerializer):
-    worker = TestUserSerializer(many=True,)
+    worker = TestUserSerializer(many=True, )
 
     class Meta:
         model = Project
         fields = '__all__'
+
+
+class UserSerializer(ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'email', 'username')
+
+
+class UserSerializerWithFields(ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name',
+                  'email', 'username',
+                  'is_superuser', 'is_staff')
