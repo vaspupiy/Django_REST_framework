@@ -10,7 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+import django
+from django.utils.encoding import force_str
+
 from pathlib import Path
+
+django.utils.encoding.force_text = force_str
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -42,6 +47,7 @@ INSTALLED_APPS = [
     'ToDoapp',
     'rest_framework.authtoken',
     'drf_yasg',
+    "graphene_django",
 ]
 
 MIDDLEWARE = [
@@ -150,4 +156,8 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.URLPathVersioning',
 
+}
+
+GRAPHENE = {
+    "SCHEMA": "Web_service_TODO_notes.schema.schema"
 }

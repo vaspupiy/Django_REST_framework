@@ -20,6 +20,7 @@ from drf_yasg.views import get_schema_view
 from rest_framework import permissions
 from rest_framework.authtoken import views
 from rest_framework.routers import DefaultRouter
+from graphene_django.views import GraphQLView
 
 from ToDoapp.views import ProjectModelViewSet, TODOModelViewSet
 from users.views import UserModelViewSet, UserListAPIView
@@ -54,4 +55,5 @@ urlpatterns = [
          name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0),
          name='schema-redoc'),
+    path("graphql/", GraphQLView.as_view(graphiql=True)),
 ]
