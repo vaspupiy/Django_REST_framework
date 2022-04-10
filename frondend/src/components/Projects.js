@@ -3,7 +3,7 @@ import Table from 'react-bootstrap/Table'
 import { Link } from 'react-router-dom'
 
 
-const ProjectItem = ({ project }) => {
+const ProjectItem = ({ project, deleteProject }) => {
     return (
         <tbody>
             <tr>
@@ -17,30 +17,35 @@ const ProjectItem = ({ project }) => {
                     {/* {project.worker} */}
                     {JSON.stringify(project.worker)}
                 </td>
+                <td><button onClick={() => deleteProject(project.uid)} type='button'>Delete</button></td>
             </tr>
         </tbody>
     )
 }
 
 
-const ProjectList = ({ projects }) => {
+const ProjectList = ({ projects, deleteProject }) => {
     return (
-        <Table striped bordered hover variant="dark">
-            <thead>
-                <tr>
-                    <th>
-                        ProjectName
-                    </th>
-                    <th>
-                        Link
-                    </th>
-                    <th>
-                        Worker
-                    </th>
-                </tr>
-            </thead>
-            {projects.map((project) => <ProjectItem project={project} />)}
-        </Table>
+        <div>
+            <Table striped bordered hover variant="dark">
+                <thead>
+                    <tr>
+                        <th>
+                            ProjectName
+                        </th>
+                        <th>
+                            Link
+                        </th>
+                        <th>
+                            Worker
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                {projects.map((project) => <ProjectItem project={project} deleteProject={deleteProject} />)}
+            </Table>
+            <Link to='/projects/create'>Create</Link>
+        </div>
     )
 }
 

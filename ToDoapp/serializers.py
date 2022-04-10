@@ -12,7 +12,7 @@ class SimpleUserModelSerializer(HyperlinkedModelSerializer):
 
 
 class ProjectModelSerializer(HyperlinkedModelSerializer):
-    worker = StringRelatedField(many=True, )
+    # worker = StringRelatedField(many=True, )
     uid = StringRelatedField(read_only=True)
 
     class Meta:
@@ -21,9 +21,11 @@ class ProjectModelSerializer(HyperlinkedModelSerializer):
         fields = '__all__'
 
 
-class TODOModelSerializer(HyperlinkedModelSerializer):
-    author = StringRelatedField()
-    project = StringRelatedField()
+# class TODOModelSerializer(HyperlinkedModelSerializer):
+class TODOModelSerializer(ModelSerializer):
+    # author = StringRelatedField()
+    # project = StringRelatedField()
+    uid = StringRelatedField(read_only=True)
 
     class Meta:
         model = TODO
@@ -34,13 +36,16 @@ class TODOModelSerializer(HyperlinkedModelSerializer):
 class TestUserSerializer(ModelSerializer):
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'email', 'username')
+        fields = ('uid', 'first_name', 'last_name', 'email', 'username')
+        # fields = '__all__'
 
 
 class TestProjectSerializerBase(ModelSerializer):
+    # worker = TestUserSerializer(many=True, )
+
     class Meta:
         model = Project
-        fields = ('name', 'link')
+        fields = ('name', 'link', 'worker')
 
 
 class TestProjectSerializer(ModelSerializer):
